@@ -1,0 +1,307 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #f7f5f0;
+  --bg-2: #efebe3;
+  --ink: #20221f;
+  --wood: #8a6245;
+  --wood-light: #a67c58;
+  --wood-mid: #7a5738;
+  --wood-dark: #4c3421;
+  --sage: #657a63;
+  --sage-light: #dde4d7;
+  --gold: #b79b68;
+  --gold-bright: #e8cf9c;
+}
+
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  overflow-x: hidden;
+  font-weight: 400;
+}
+
+::selection {
+  background: rgba(101, 122, 99, 0.18);
+  color: var(--ink);
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Glass surface */
+.glass {
+  background: rgba(247, 245, 240, 0.72);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(32, 34, 31, 0.07);
+}
+
+.glass-dark {
+  background: rgba(32, 34, 31, 0.82);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Editorial display heading */
+.display {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+}
+
+.eyebrow {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--sage);
+}
+
+/* Hairline divider */
+.hairline {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(32, 34, 31, 0.12),
+    transparent
+  );
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--sage);
+  border-radius: 8px;
+  border: 2px solid var(--bg-2);
+}
+
+/* Range slider */
+input[type='range'].lux-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--sage) 0%,
+    var(--sage) var(--val, 50%),
+    rgba(32, 34, 31, 0.12) var(--val, 50%),
+    rgba(32, 34, 31, 0.12) 100%
+  );
+  outline: none;
+}
+input[type='range'].lux-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--sage);
+  box-shadow: 0 4px 12px rgba(101, 122, 99, 0.35);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+input[type='range'].lux-range::-webkit-slider-thumb:hover {
+  transform: scale(1.12);
+}
+input[type='range'].lux-range::-moz-range-thumb {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--sage);
+  box-shadow: 0 4px 12px rgba(101, 122, 99, 0.35);
+  cursor: pointer;
+}
+
+/* Grain overlay */
+.grain::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Reveal helpers (GSAP toggles these) */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+/* Marquee */
+@keyframes marquee-rtl {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
+}
+.marquee-track {
+  animation: marquee-rtl 28s linear infinite;
+}
+
+/* Subtle pulse for hotspots */
+@keyframes hotspot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(101, 122, 99, 0.45); }
+  50% { box-shadow: 0 0 0 14px rgba(101, 122, 99, 0); }
+}
+.hotspot-pulse {
+  animation: hotspot-pulse 2.4s ease-out infinite;
+}
+
+/* Number tabular */
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===================================================================
+   Wooden module cards — small "showroom sample tag" treatment for the
+   five feature cards (products, orders, customers, sales, branches).
+   Reads as a physical wood swatch: grain, brass rivet, carved icon well.
+   No longer used for the dashboard sidebar (that's now a light rail,
+   see .side-label below) — kept here for the feature tags under the copy.
+=================================================================== */
+.wood-card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    repeating-linear-gradient(
+      178deg,
+      rgba(255, 255, 255, 0.05) 0px,
+      rgba(255, 255, 255, 0.05) 1px,
+      transparent 2px,
+      transparent 4px
+    ),
+    linear-gradient(155deg, #9c7350 0%, #8a6245 38%, #6b4a34 76%, #4c3421 100%);
+  border: 1px solid rgba(28, 16, 6, 0.4);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -16px 22px -16px rgba(0, 0, 0, 0.55),
+    0 10px 22px -14px rgba(58, 34, 16, 0.5);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.wood-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E");
+}
+
+.wood-card::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 10px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 207, 156, 0.4), transparent);
+}
+
+.wood-card:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 -16px 22px -16px rgba(0, 0, 0, 0.55),
+    0 16px 30px -14px rgba(58, 34, 16, 0.6);
+}
+
+.wood-card-active {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 0 0 2px var(--gold-bright),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 18px 34px -14px rgba(58, 34, 16, 0.65);
+}
+
+.wood-rivet {
+  position: absolute;
+  top: 11px;
+  right: 12px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--gold-bright), var(--gold) 55%, #7a5f36 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), inset 0 0 1px rgba(255, 255, 255, 0.6);
+}
+
+.wood-icon-plate {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(160deg, rgba(0, 0, 0, 0.32), rgba(0, 0, 0, 0.06));
+  box-shadow:
+    inset 0 2px 5px rgba(0, 0, 0, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* ===================================================================
+   Sidebar nav — icon + micro-label pairing so each dashboard icon is
+   legible on its own. Tuned for the light bg-2 rail (dark ink text
+   instead of the old on-dark cream), with the active state handed off
+   via the CSS sibling selector below.
+=================================================================== */
+.side-label {
+  display: block;
+  text-align: center;
+  font-size: 8px;
+  line-height: 1.4;
+  margin-top: 3px;
+  color: rgba(32, 34, 31, 0.35);
+  transition: color 0.3s ease;
+}
+
+.side-icon.is-active + .side-label {
+  color: var(--sage);
+  font-weight: 600;
+}
+
+.tilt-panel {
+  transition: transform 0.2s ease-out;
+  transform-style: preserve-3d;
+}
+
+.stat-tag {
+  transform: rotate(var(--tilt, 0deg));
+}
+.stat-tag:hover {
+  transform: rotate(0deg) translateY(-4px);
+}
